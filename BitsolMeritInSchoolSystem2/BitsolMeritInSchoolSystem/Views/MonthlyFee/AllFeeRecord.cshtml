@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<h2>Monthly Fees</h2>
+<p>
+    @Html.ActionLink("Add Monthly Fee +", "Create", null, new { @class = "btn btn-default btn-primary" }) |  @Html.ActionLink("Paid/Un-Paid", "PaidUnPaid", null, new { @class = "btn btn-default btn-info" })
+</p>
+<div style="width:100%;margin-top:10px;background-color:lightgray;" class="panel-body">
+
+    <div class="col-md-4">
+        <label>Year:</label>
+        <input id="ByYear" class="form-control" type="text" />
+    </div>
+    <div class="col-md-4">
+        <label>Month:</label>
+        <select id='ByMonth' class="form-control">
+            <option value=''>--Select Month--</option>
+            <option value='1'>Janaury</option>
+            <option value='2'>February</option>
+            <option value='3'>March</option>
+            <option value='4'>April</option>
+            <option value='5'>May</option>
+            <option value='6'>June</option>
+            <option value='7'>July</option>
+            <option value='8'>August</option>
+            <option value='9'>September</option>
+            <option value='10'>October</option>
+            <option value='11'>November</option>
+            <option value='12'>December</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label></label>
+        <input type="button" id="btnShowFees" class="btn btn-info" value="Show Students" />
+    </div>
+</div>
+<br />
+<div id="allFeeRecordDiv">
+
+</div>
+
+
+
+
+
+<script>
+    $("#btnShowFees").click(function () {
+        var year = $("#ByYear").val();
+        var month = $("#ByMonth").val();
+        if (year === '' || month === '') {
+            alert("Year and month is required");
+            return
+        }
+
+        $.ajax({
+
+            method: "GET",
+            url: "GetListMonthlyFee",
+            data: { year: year, month: month },
+            datatype: "HTML",
+            success: function (Response) {
+
+
+                $("#allFeeRecordDiv").html(Response);
+
+
+
+            }
+
+        });
+    });
+
+</script>

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.DailyExpenditure>
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+
+}
+
+<h2>Revenues</h2>
+
+<p>
+    @Html.ActionLink("Monthly Revenue", "MonthlyRevenue", null, new { @class = "btn btn-default" }) | @Html.ActionLink("Annual Revenue", "AnnualRevenue", null, new { @class = "btn btn-default" }) | @Html.ActionLink("Daily Revenue", "DailyRevenue", null, new { @class = "btn btn-default" })
+
+</p>

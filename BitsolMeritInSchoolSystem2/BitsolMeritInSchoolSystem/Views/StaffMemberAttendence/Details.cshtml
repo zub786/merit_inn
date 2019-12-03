@@ -1,0 +1,75 @@
+﻿@model BitsolMeritInSchoolSystem.Models.StaffMemberAttendence
+
+@{
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>StaffMemberAttendence</h4>
+    	<hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.StaffMember.StaffMemberName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.StaffMember.StaffMemberName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.InTime)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.InTime)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.OutTime)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.OutTime)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.StaffMemberAttendenceId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

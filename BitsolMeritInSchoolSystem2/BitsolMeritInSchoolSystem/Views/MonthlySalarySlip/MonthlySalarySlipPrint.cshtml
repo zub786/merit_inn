@@ -1,0 +1,87 @@
+﻿@model BitsolMeritInSchoolSystem.Models.MonthlySalarySlip
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MonthlyFeeSlipPrint</title>
+</head>
+<body>
+    <div class="container">
+     
+
+        <div class="row">
+
+            <div>
+                <h1 style="text-align:center;"> MERIT INN SCHOOL</h1>
+               <img src="~/Images/MeritInnLogo.png" style="height: 150px; width: 150px; margin-bottom: 10px; align-content: center;margin-left:40%;" />
+
+            </div>
+
+        </div>
+        <div class="row">
+            <h3 style="text-align:center;">Monthly Employee Salary Slip</h3>
+        </div>
+        <hr />
+        <div class="row">
+
+            <table style="width:100%;">
+
+
+                <tbody>
+                    <tr>
+
+                        <td>         @Html.DisplayNameFor(model => model.Name)</td>
+
+                        <td>        @Html.DisplayFor(model => model.Name)           </td>
+
+                        <td>         @Html.DisplayNameFor(model => model.CNIC)</td>
+
+                        <td>         @Html.DisplayFor(model => model.CNIC)            </td>
+                    </tr>
+
+
+                    <tr>
+
+                        <td>         @Html.DisplayNameFor(model => model.Salary)</td>
+
+                        <td>         @Html.DisplayFor(model => model.Salary)            </td>
+
+                        <td>        @Html.DisplayNameFor(model => model.Date)</td>
+
+                        <td>         @Html.DisplayFor(model => model.Date)            </td>
+                    </tr>
+
+
+                 
+
+
+
+                </tbody>
+
+
+            </table>
+
+
+
+
+
+
+
+        </div>
+
+
+
+        <div style="margin-top:450px;float:right;">
+
+            <h3><b>Authenticated By</b></h3>
+            <p>_____________________</p>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿<p><h3><b style="text-align:right;">Total Annual Revenue : </b> @ViewBag.TotalAnnualExpense </h3></p>
+
+<table class=" table table-hover">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Submission Date</th>
+
+            <th>
+                Amount
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var Temp in ViewBag.TotalAnnualExpenseDetails)
+        {
+
+
+            <tr>
+
+                <td>@Temp.Student.StudentName</td>
+                <td>@Temp.Date</td>
+
+                <td>@Temp.FeeAmount</td>
+
+            </tr>
+
+        }
+
+    </tbody>
+
+
+</table>
+
+

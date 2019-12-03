@@ -1,0 +1,97 @@
+﻿@* @model IEnumerable<BitsolMeritInSchoolSystem.Models.Student>  *@
+
+
+@{
+    ViewBag.Title = "CurrentIndex";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_TeacherLayout2.cshtml";
+    }
+}
+
+<h2>Students</h2>
+
+<p>
+    @Html.ActionLink("Add New", "Create",null,new { @class = "btn btn-sm btn-primary" })  |  @Html.ActionLink("Show Closed X", "ClosedIndex", null, new { @class = "btn btn-sm btn-danger" })  |  @Html.ActionLink("Students Details", "AllStudentsDetails", null, new { @class = "btn btn-sm btn-info" })
+</p>
+<div class="row panel" style="background-color:lightgreen;">
+
+    <div class="col-md-12 success">
+
+        <h1 style="text-align:center;color:green;">@ViewBag.SucccessMessage</h1>
+
+    </div>
+
+</div>
+<table class="table hover" id="students">
+  <thead>
+      <tr>
+          <th>
+              Class
+          </th>
+          <th>
+              Section
+          </th>
+          <th>
+              Student Name
+          </th>
+          <th>
+              Father Name
+          </th>
+          
+          <th>
+              Contact No
+          </th>
+
+
+          <th>Action</th>
+      </tr>
+  </thead>
+<tbody>
+    
+    
+        <tr>
+            <td>
+                @ViewBag.Model.ClassSection.Class.ClassName
+            </td>
+            <td>
+                @ViewBag.Model.ClassSection.Section.SectionName
+            </td>
+            <td>
+                @ViewBag.Model.StudentName
+            </td>
+            <td>
+                @ViewBag.Model.FatherName
+            </td>
+           
+            <td>
+                @ViewBag.Model.ContactNo
+            </td>
+
+            <td>
+               @Html.ActionLink("Edit", "Edit", new { id = ViewBag.Model.StudentId }, new { @class = "btn btn-sm btn-success" }) |
+@Html.ActionLink("Details", "Details", new { id = ViewBag.Model.StudentId }, new { @class = "btn btn-sm btn-info" }) |
+
+                @Html.ActionLink("Close X", "Close", new { id = ViewBag.Model.StudentId }, new { @class = "btn btn-sm btn-danger" }) 
+                
+            </td>
+        </tr>
+    
+</tbody>
+
+</table>
+<script>
+    $("#students").DataTable();
+
+
+
+
+
+   
+</script>

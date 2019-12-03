@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.Student>
+
+@{
+    ViewBag.Title = "FindStrength";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<div class="container">
+   
+        
+
+       <div style="padding:10px;">
+           <div style="float:left;width:40%;" class="col-md-5">
+               @Html.DropDownList("ClassId", null, "Select Class", new { @class = "form-control" })
+           </div>
+
+           <div style="float:left;width:40%;" class="col-md-5">@Html.DropDownList("SectionId", null, "Select Section", new { @class = "form-control" })</div>
+
+
+           <div style="float:right;width:20%;" class="col-md-2"><input id="ShowStrength" type="button" class="btn btn-info" value="Show Students" /></div>
+       </div>
+
+           
+
+
+
+
+
+    <div id="StudentsBody" style="width:100%;">
+
+    </div>
+</div>
+
+
+
+<script>
+    $("#ShowStrength").click(function () {
+        
+        $.ajax({
+            method: "GET",
+            url: "SectionStudents",
+            data: { c: $("#ClassId").val(), s: $("#SectionId").val() },
+            datatype: "HTML",
+            success: function (Response) {
+
+
+                $("#StudentsBody").html(Response);
+
+            }
+
+        });
+
+       
+
+        
+    });
+    $("#ClassId").change(function () {
+      
+        var url = "GetSections/" + $("#ClassId").val();
+        $.getJSON(url, sections);
+        function sections(response) {
+            $("#SectionId").empty();
+            $("#SectionId").append("<option value='0'> Select Section </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#SectionId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+
+    });
+ 
+</script>

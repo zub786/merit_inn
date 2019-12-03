@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "MonthlyExpense";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<div class="container">
+
+    <h2>Annual Revenue Record</h2>
+    <p>@Html.ActionLink(" Back", "Index", null, new { @class = "btn btn-default glyphicon glyphicon-arrow-left " })   </p>
+  
+          <div style="display:inline-block;">
+              <label>Year</label>
+              <input style="margin-left:25px;" class="form-control" type="text" name="Year" id="Year" required />
+
+              <br />
+              <input type="button" class="btn btn-info" value="Show Revenue" id="ShowAnnualExpense" />
+          </div>
+   
+
+    
+   
+
+    
+    <hr />
+    
+    <div id="AnnualRecord">
+    </div>
+   
+</div>
+
+
+<script>
+
+    $("#ShowAnnualExpense").click(function () {
+
+       
+      
+        var yy = $("#Year").val();
+
+        $.ajax({
+
+            method: "GET",
+            url: "ShowAnnualExpense",
+            data: {y: yy },
+            success: function (Response) {
+
+                $("#AnnualRecord").html(Response);
+
+            }
+
+        });
+
+
+    });
+
+    $("#ShowAnnualExpense").click(function () {
+
+      
+       
+        var yy = $("#Year").val();
+
+        $.ajax({
+
+            method: "GET",
+            url: "ShowAnnualRevenue",
+            data: { y: yy },
+            success: function (Response) {
+
+                $("#AnnualRecord").html(Response);
+
+            }
+
+        });
+
+
+    });
+
+
+</script>

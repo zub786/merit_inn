@@ -1,0 +1,231 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.Attendence>
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_TeacherLayout2.cshtml";
+    }
+}
+
+
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<div class="container">
+    <div style="width:100%;">
+        <div style="float:right;">
+            @Html.ActionLink("View Attendence", "ViewAttendenceDetails", null, new { @class = "btn btn-info" })
+        </div>
+        <h2>Attendence Sheet</h2>
+      
+       
+
+    </div>
+    <div style="width:100%;margin-top:10px;background-color:lightgray;" class="panel-body">
+        <div class="col-md-6" style="width:50%;float:left;">
+            <label>Class:</label>
+            @Html.DropDownList("ClassId", null, "Select Class", new { @class = "form-control" })
+
+            <label>Section:</label>
+            @Html.DropDownList("SectionId", null, "Select Class", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-8" style="width:50%;float:right;">
+         
+            <label><input type="text" style="width:100%;" id="AttendenceDate" value="@DateTime.UtcNow" readonly class="form-control" /></label>
+            <br /><br />
+            <input type="button" value="Show Attendence Sheet" class="form-control btn-primary" id="ShowAttendenceSheet" />
+            <br />
+            <input type="button" value="Submit Attendence" class="form-control success" id="SubmitAttendence" />
+           
+        </div>
+
+        
+    </div>
+
+    <div id="AttendenceSheetDiv">
+
+        <table id="AttendenceSheet" class="table table-hover" style="border:1px;" >
+
+            <thead>
+                <tr>
+                    <th>
+                        Sr. #
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Present
+                    </th>
+                    <th>
+                        Absent
+                    </th>
+                    <th>
+                        Leave
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody id="AttendenceSheetBody">
+
+
+
+            </tbody>
+
+
+
+        </table>
+
+        
+
+
+
+    </div>
+
+</div>
+
+<script>
+    var TotalStudents = 0;
+    $("#ClassId").change(function () {
+
+
+        var url = "GetSections/?id=" + $("#ClassId").val();
+        $.getJSON(url, sections);
+        function sections(response) {
+            $("#SectionId").empty();
+            $("#SectionId").append("<option value='0'> Select Section </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#SectionId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+    });
+
+    $("#ShowAttendenceSheet").click(function () {
+
+
+        var url = "ShowAttendenceSheet/?c=" + $("#ClassId").val() + "&s=" + $("#SectionId").val();
+        $.getJSON(url, attend);
+        function attend(response) {
+
+            if (response.length == 0) {
+                alert("Sorry! There is no student in this class.");
+            }
+
+            TotalStudents = response.length;
+
+            $("#AttendenceSheetBody").empty();
+            for (var i = 0; i < response.length; i++) {
+
+                $("#AttendenceSheetBody").append("<tr id=" + response[i].StudentId + "><td>" + (i+1) + "</td><td>" + response[i].Name + "</td><td><input" + " name=" + response[i].StudentId + " type=" + "radio" + " id=" + "Status" + " value=" + "P" + "></td><td><input" + " name=" + response[i].StudentId + " type=" + "radio" + " id=" + "Status" + " value=" + "A" + "></td><td><input" + " name=" + response[i].StudentId + " type=" + "radio" + " id=" + "Status" + " value=" + "L" + "></td></tr>");
+            }
+        }
+    });
+
+
+
+    $("#SubmitAttendence").click(function () {
+        if ($('input:radio:checked').length == 0 || $('input:radio:checked').length < TotalStudents) {
+
+
+            alert("Sorry! Please mark the attendece of all students");
+            return;
+
+        }
+        var dataArray = [];
+
+        $.ajax({
+            type: "POST",
+            url: "CheckAttendence",
+            data: { date: $("#AttendenceDate").val(), c: $("#ClassId").val(), s: $("#SectionId").val() },
+            processData: true,
+            success: function (data) {
+              
+                if (data == "Attendnce for this day already submited") {
+                    alert(data);
+                    return;
+                }
+                else{
+                    var clas = $("#ClassId").val();
+                    var section = $("#SectionId").val();
+                    var date = $("#AttendenceDate").val();
+                    var studentId;
+                    var status;
+        
+                    var table = document.getElementById("AttendenceSheetBody");
+                    for (var i = 0; row = table.rows[i]; i++) {
+                        studentId = document.getElementById("AttendenceSheetBody").rows[i].id;
+                        var radioValue = $("input[name=" + studentId + "]:checked").val();
+
+
+
+                        var Attendence = {};
+                        
+                        Attendence.ClassId = parseInt(clas);
+                        Attendence.SectionId = parseInt(section);
+                        Attendence.StudentId = parseInt(studentId);
+                        Attendence.Status = radioValue;
+                        Attendence.Date = date;
+
+                     
+                        dataArray.push(Attendence);
+                      
+                     
+                    }
+               
+
+
+               
+
+
+
+
+                    //if (dataArray.length == 0) {
+                       
+                    //    alert("Sorry! Please mark the attendece");
+                    //    return;
+                    //}
+
+
+                    $.ajax({
+                        url: '/Attendence/SubmitAttendence',
+                        type: "POST",
+                        contentType: "application/json",
+                        //traditional: true,
+                        data: JSON.stringify({ details: { myList: dataArray } }), // If this doesn't work, try JSON.stringify({ details: { myList: values } })
+                           
+                        success: function (d) {
+                            alert(d);
+                            console.log('success!!');
+
+                        }
+                    });
+
+                }
+            },
+            error: function (xhr, ajaxOptions, error) {
+                alert("Sorry! Please mark the attendece");
+                alert(xhr.status);
+                alert("Error: " + xhr.responseText);
+                //alert(error);
+            }
+
+        });
+
+
+
+       
+    });
+
+        
+
+</script>

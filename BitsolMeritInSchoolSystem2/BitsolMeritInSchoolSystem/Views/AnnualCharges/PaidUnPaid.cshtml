@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "PaidUnPaid";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h3>Annual Charges Paid/Un-Paid Students</h3>
+
+        </div>
+    </div>
+    <div>
+   
+        @Html.ActionLink("Get Print", "Print", null, new { @class = "btn btn-info " })
+
+
+    @*<input type="button" class="btn btn-info" value="Get Print" id="print"  />*@
+   
+    </div>
+    <div style="width:100%;margin-top:10px;background-color:lightgray;" class="panel-body">
+        <div class="col-md-4" style="width:30%;float:left;">
+            <label>Class:</label>
+            @Html.DropDownList("ClassId", null, "Select Class", new { @class = "form-control" })
+
+            <label>Section:</label>
+            @Html.DropDownList("SectionId", null, "Select Class", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-4" style="width:30%;float:right;">
+            <input type="button" id="ShowPaidUnpaid" class="btn btn-info" value="Show Students" />
+            <br />
+            <br />
+            <br />
+            <p>@Html.ActionLink(" Back", "Index", null, new { @class = "btn btn-default glyphicon glyphicon-arrow-left " })</p>
+        </div>
+    
+        <div class="col-md-4" style="width:30%;float:right;">
+            <label>Year:</label>
+            <input id="ByYear" class="form-control" type="text" />
+
+
+           
+
+        </div>
+    </div>
+
+
+
+    <div id="RecordBody" style="width:100%;float:left;">
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+    var availableTags = [
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ];
+    $("#ByYear").autocomplete({
+        source: availableTags
+    });
+
+    $("#ClassId").change(function () {
+
+
+        var url = "GetSections/?id=" + $("#ClassId").val();
+        $.getJSON(url, sections);
+        function sections(response) {
+            $("#SectionId").empty();
+            $("#SectionId").append("<option value='0'> Select Section </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#SectionId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+    });
+
+
+    $("#ShowPaidUnpaid").click(function () {
+
+
+        $.ajax({
+
+            method: "GET",
+            url: "ShowPaidUnpaid",
+            data: { c: $("#ClassId").val(), s: $("#SectionId").val(), y: $("#ByYear").val(), m: $("#ByMonth").val() },
+            datatype: "HTML",
+            success: function (Response) {
+
+
+                $("#RecordBody").html(Response);
+
+                
+
+            }
+
+        });
+    });
+
+    //$("#print").click(function () {
+
+
+    //    $.ajax({
+
+    //        method: "GET",
+    //        url: "Print",
+    //        datatype: "HTML",
+    //        success: function (Response) {
+    //            newWindow.document.write(Response);
+
+    //            //$("#RecordBody").html(Response);
+
+    //        }
+
+    //    });
+    //});
+</script>

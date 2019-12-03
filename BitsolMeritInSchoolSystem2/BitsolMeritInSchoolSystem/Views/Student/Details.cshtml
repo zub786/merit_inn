@@ -1,0 +1,189 @@
+﻿@model BitsolMeritInSchoolSystem.Models.StudentModelView
+
+@{
+    ViewBag.Title = "Details";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_TeacherLayout2.cshtml";
+    }
+}
+
+<h2> Student Details</h2>
+
+<div>
+  
+	<hr />
+    @if (Model.StudentImage != null)
+    {
+      
+
+            <img id="myImg"  src='@Model.StudentImage'  style="max-width:300px; max-height:450px;align-content:center;" />
+      
+    }
+    <div class="row">
+
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.StudentName)
+                  
+                </dt>
+
+                <dd>
+                  
+                    @Html.DisplayFor(model => model.StudentName)
+                </dd>
+            </dl>
+        </div>
+
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FatherName)
+                   
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FatherName)
+                 
+                </dd>
+            </dl>
+
+        </div>
+
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.ClassSection.Class.ClassName)
+                   
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ClassSection.Class.ClassName)
+                 
+                </dd>
+            </dl>
+        </div>
+
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ClassSection.Section.SectionName)
+                 
+                </dt>
+
+                <dd>
+
+                    @Html.DisplayFor(model => model.ClassSection.Section.SectionName)
+                </dd>
+            </dl>
+
+        </div>
+
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+                <dt>
+
+                    @Html.DisplayNameFor(model => model.ContactNo)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ContactNo)
+                </dd>
+        </dl>
+    </div>
+
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.BayFormNo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BayFormNo)
+            </dd>
+        </dl>
+
+    </div>
+
+
+</div>
+
+    <div class="row">
+
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+            </dl>
+        </div>
+
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+            </dl>
+
+        </div>
+
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DateOfBirth)
+                </dd>
+            </dl>
+        </div>
+
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Closed)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Closed)
+                </dd>
+            </dl>
+
+        </div>
+
+
+    </div>
+
+
+
+
+</div>
+
+

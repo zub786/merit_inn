@@ -1,0 +1,29 @@
+﻿<p><h3><b style="text-align:right;">Total Monthly Expense : </b> @ViewBag.TotalMonthlyExpense </h3></p>
+<table class=" table table-hover" >
+    <thead>
+        <tr>
+            <th>Expense Description</th>
+            <th>Expense Amount</th>
+            <th>Expense Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var Temp in ViewBag.Expenses)
+        {
+            
+            
+        <tr>
+
+            <td>@Temp.ExpenditureDescription</td>
+            <td id="Amount">@Temp.ExpenditureAmount</td>
+            <td>@Temp.Date</td>
+
+        </tr>
+        
+        }
+
+    </tbody>
+   
+
+</table>

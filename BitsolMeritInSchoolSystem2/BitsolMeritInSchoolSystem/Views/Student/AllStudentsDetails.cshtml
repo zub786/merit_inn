@@ -1,0 +1,100 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.Student>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row" style="margin-top:10%;">
+
+        <div >
+            <h1 style="text-align:center;">THE MERIT SCHOOL</h1>
+            <img  src="~/Images/MeritInnLogo.png" style="height: 150px; width: 150px; margin-bottom: 10px; align-content: center;margin-left:40%;" />
+
+        </div>
+
+    </div>
+    <div class="col-md-12">
+
+
+       
+          <table style="margin-top:5%;width:100%;">
+              <tr><td><label>Class:</label></td>
+   
+                  <td> @Html.DropDownList("ClassId", null, "Select Class", new { @class = "form-control" })</td>
+              
+              
+                  <td> <label>Section:</label>  </td>
+
+                 <td>
+                     
+                      @Html.DropDownList("SectionId", null, "Select Section", new { @class = "form-control" })
+
+
+                 </td>
+              
+              <td>
+                 
+                      <input type="button" value="Show Students" class="form-control success" id="ShowStudents" />
+
+                 
+                  
+                  
+                  </td></tr>
+          </table>
+      
+    
+
+
+    </div>
+
+
+    <div id="StudentsBody" class="col-md-12">
+
+
+
+
+    </div>
+</div>
+
+
+<script>
+
+    $("#ClassId").change(function () {
+   
+
+        var url = "GetSections/?id=" + $("#ClassId").val();
+        $.getJSON(url, sections);
+        function sections(response) {
+            $("#SectionId").empty();
+            $("#SectionId").append("<option value='0'> Select Section </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#SectionId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+    });
+
+   
+    $("#ShowStudents").click(function () {
+
+
+        $.ajax({
+            url: 'AllStudentsDetailsPartialView',
+            type: "POST",
+            //traditional: true,
+            data: { c: $("#ClassId").val(), s: $("#SectionId").val() }, // If this doesn't work, try JSON.stringify({ details: { myList: values } })
+
+            success: function (d) {
+                $("#StudentsBody").html(d);
+
+            }
+        });
+
+
+
+
+    });
+
+
+</script>

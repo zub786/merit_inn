@@ -1,0 +1,21 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<h2>Monthly Fees</h2>
+
+<p>
+    @Html.ActionLink("Add Monthly Fee +", "Create",null, new { @class = "btn btn-default btn-primary"}) |  @Html.ActionLink("Paid/Un-Paid", "PaidUnPaid", null, new { @class = "btn btn-default btn-info" }) | @Html.ActionLink("All Fee Record", "AllFeeRecord", null, new { @class = "btn btn-default btn-info" })
+</p>

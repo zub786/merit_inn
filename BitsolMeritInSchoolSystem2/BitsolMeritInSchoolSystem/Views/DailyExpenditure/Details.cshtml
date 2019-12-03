@@ -1,0 +1,75 @@
+﻿@model BitsolMeritInSchoolSystem.Models.DailyExpenditure
+
+@{
+    ViewBag.Title = "Details";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_TeacherLayout2.cshtml";
+    }
+}
+
+<h2>Daily Expenditure Details</h2>
+<div class="row">
+
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ExpenditureDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ExpenditureDescription)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ExpenditureAmount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ExpenditureAmount)
+            </dd>
+        </dl>
+
+    </div>
+
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+
+            
+        </dl>
+    </div>
+
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+        </dl>
+
+    </div>
+
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DailyExpenditureId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

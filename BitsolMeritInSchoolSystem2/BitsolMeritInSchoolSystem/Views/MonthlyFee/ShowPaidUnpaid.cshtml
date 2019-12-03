@@ -1,0 +1,75 @@
+﻿
+
+
+
+
+<p>
+    <h3><b>
+        Record of Paid and UnPaid Students
+        </b></h3>
+</p>
+
+    <table id="PaidRecord" class="table table-hover"  style="width:50%;float:left;">
+
+        <thead>
+            <tr>
+                <th style="text-align: center;">
+                    Paid Students @ViewBag.PaidCount
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var paid in ViewBag.Paids)
+            {
+                <tr>
+                    <td style="text-align: center;">
+                        @paid.Student.StudentName
+                       
+                    </td>
+
+                  
+                </tr>
+            }
+
+        </tbody>
+
+
+    </table>
+    <table id="UnPaidRecord" class="table table-hover" style="width:50%;float:right;">
+
+    <thead>
+        <tr>
+            <th style="text-align: center;">
+                Un-Paid Students @ViewBag.UnPaidCount
+           
+            </th>
+          
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var Unpaid in ViewBag.UnPaids)
+        {
+            <tr>
+                <td style="text-align: center;">
+                    @Unpaid.StudentName
+                </td>
+                
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+
+<script>
+
+    //$("#PaidRecord").DataTable();
+
+    //$("#UnPaidRecord").DataTable();
+
+
+</script>

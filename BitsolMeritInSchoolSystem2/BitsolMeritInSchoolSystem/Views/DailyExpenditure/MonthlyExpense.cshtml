@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "MonthlyExpense";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<div class="container">
+
+    <h2>Monthly Expense Record</h2>
+    <p>@Html.ActionLink(" Back", "Index", null, new { @class = "btn btn-default glyphicon glyphicon-arrow-left " })</p>
+  
+          <div style="display:inline-block;">
+              <label>Year</label>
+              <input style="margin-left:25px;" class="form-control" type="text" name="Year" id="Year" required />
+
+
+              <br />
+              <label>Month</label>
+              <select id="Month" class="form-control" style="width: 500px; margin-left: 25px; ">
+                  <option value=""> Select Month </option>
+                  <option value="1"> January </option>
+                  <option value="2"> Februry </option>
+                  <option value="3"> March </option>
+                  <option value="4"> April </option>
+                  <option value="5"> May </option>
+                  <option value="6"> June </option>
+                  <option value="7"> July </option>
+                  <option value="8"> Auguest </option>
+                  <option value="9"> September </option>
+                  <option value="10"> October </option>
+                  <option value="11"> November </option>
+                  <option value="12"> December </option>
+
+              </select>
+              <br />
+              <input type="button" class="btn btn-info" value="Show Expense" id="ShowMonthlyExpense" />
+          </div>
+   
+
+    
+   
+
+    
+    <hr />
+    
+    <div id="MonthlyRecord">
+    </div>
+   
+</div>
+
+
+<script>
+
+    $("#ShowMonthlyExpense").click(function () {
+
+       
+        var mm = $("#Month").val();
+        var yy = $("#Year").val();
+
+        $.ajax({
+
+            method: "GET",
+            url: "ShowMonthlyExpense",
+            data: { m: mm, y: yy },
+            success: function (Response) {
+
+                $("#MonthlyRecord").html(Response);
+
+            }
+
+        });
+
+
+    });
+
+    $("#ShowAnnualExpense").click(function () {
+
+    
+       
+        var yy = $("#Year").val();
+
+        $.ajax({
+
+            method: "GET",
+            url: "ShowAnnualExpense",
+            data: { y: yy },
+            success: function (Response) {
+
+                $("#MonthlyRecord").html(Response);
+
+            }
+
+        });
+
+
+    });
+
+
+</script>

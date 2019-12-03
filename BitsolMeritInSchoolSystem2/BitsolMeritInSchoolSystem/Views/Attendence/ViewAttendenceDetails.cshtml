@@ -1,0 +1,225 @@
+﻿
+@{
+    ViewBag.Title = "ViewAttendenceDetails";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_TeacherLayout2.cshtml";
+    }
+}
+
+<div class="container">
+    <div style="width:100%;">
+        @*<div style="float:right;">
+            @Html.ActionLink("View Attendence", "ViewAttendence", null, new { @class = "btn btn-info" })
+        </div>*@
+        <h2>View Attendence Details</h2>
+
+
+
+    </div>
+ <form>
+     <div style="width:100%;margin-top:10px;background-color:lightgray;" class="panel-body">
+         <div class="col-md-6" style="width:50%;float:left;">
+             <label>Class:</label>
+             @Html.DropDownList("ClassId", null, "Select Class", new { @class = "form-control" })
+             <p id="clsReq" style="color:red;"></p>
+
+             <label>Section:</label>
+             @Html.DropDownList("SectionId", null, "Select Section", new { @class = "form-control" })
+             <p id="secReq" style="color:red;"></p>
+
+             <div class="form-group" id="StudentsDiv">
+                 <label>Student</label>
+
+                 @Html.DropDownList("StudentId", null, "Select Student", new { @class = "form-control" })
+                 <p id="stdReq" style="color:red;"></p>
+
+             </div>
+
+
+         </div>
+
+         <div class="col-md-6" style="width:50%;float:right;">
+             <label>Year:</label>
+             <input id="Year" class="form-control" type="text" required />
+             <p id="Req" style="color:red;"></p>
+             <label>Month:</label>
+             <select id="Month" class="form-control">
+                 <option value=""> Select Month </option>
+                 <option value="1"> January </option>
+                 <option value="2"> Februry </option>
+                 <option value="3"> March </option>
+                 <option value="4"> April </option>
+                 <option value="5"> May </option>
+                 <option value="6"> June </option>
+                 <option value="7"> July </option>
+                 <option value="8"> Auguest </option>
+                 <option value="9"> September </option>
+                 <option value="10"> October </option>
+                 <option value="11"> November </option>
+                 <option value="12"> December </option>
+
+             </select>
+             <p id="monthReq" style="color:red;"></p>
+             <br />
+             <div>
+                 <input type="button" id="ViewAttendence" value="View Attendence" class="btn btn-info col-md-6 form-control" />
+             </div>
+
+         </div>
+
+
+     </div>
+ </form>
+
+    <div id="AttendenceSheetDiv">
+
+        <table id="AttendenceSheet" class="table table-hover" style="border:1px;">
+
+            <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody id="AttendenceResultBody">
+
+
+
+            </tbody>
+
+
+
+        </table>
+
+
+
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    //$("#AttendenceSheet").DataTable();
+    var availableTags = [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024"
+    ];
+    $("#Year").autocomplete({
+        source: availableTags
+    });
+
+
+    $("#SectionId").change(function () {
+
+        var url = "GetStudents/" + $("#SectionId").val();
+        $.getJSON(url, Students);
+        function Students(response) {
+            $("#StudentId").empty();
+            $("#StudentId").append("<option value='0'> Select Student </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#StudentId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+    });
+
+
+
+
+
+
+
+    $("#ClassId").change(function () {
+
+        var url = "GetSections/" + $("#ClassId").val();
+        $.getJSON(url, sections);
+        function sections(response) {
+            $("#SectionId").empty();
+            $("#SectionId").append("<option value='0'> Select Section </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#SectionId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+
+    });
+
+
+
+    $("#ViewAttendence").click(function () {
+        if ($("#Year").val() == "") {
+            $("#Req").text("year required");
+         
+           
+            
+        }
+        if ($("#ClassId").val() == "") {
+            $("#clsReq").text("Class required");
+
+
+           
+        }
+        if ($("#SectionId").val() == "") {
+            $("#secReq").text("Section required");
+
+
+           
+        }
+        if ($("#Month").val() == "") {
+            $("#monthReq").text("Month required");
+
+
+            
+        }
+        if ($("#StudentId").val() == "") {
+            $("#stdReq").text("Student required");
+
+
+           
+        }
+
+        var url = "ViewAttendence/?c=" + $("#ClassId").val() + "&s=" + $("#SectionId").val() + "&st=" + $("#StudentId").val() + "&y=" + $("#Year").val() + "&m=" + $("#Month").val();
+        $.getJSON(url, Detail);
+        function Detail(response) {
+            $("#AttendenceResultBody").empty();
+
+         
+
+            for (var i = 0; i < response.length; i++) {
+                $("#AttendenceResultBody").append("<tr><td>" + response[i].Date + "</td><td>" + response[i].Status + "</td></tr>");
+            }
+
+            if (response.length == 0) {
+                alert("No attendence found for this student");
+            }
+
+        }
+
+       
+
+    });
+
+</script>

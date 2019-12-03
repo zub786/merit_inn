@@ -1,0 +1,642 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<h2>SMS Service</h2>
+<hr />
+
+<div class="container">
+    <div id="LoadingDiv" style="display:none;" class="row" >
+
+       <div class="col-lg-12">
+           <img style="margin-left:40%;" src="~/Images/sending.gif" />
+           
+       </div>
+    </div>
+    <a href="#" class=" btn btn-primary" style="width:100%;" >
+    <h3 style="align-content:center;color:black;" id="StudentPanel">Students Section</h3>
+    </a>
+    
+    <a class="btn btn-info"  href="#" style="width:100%;">
+    
+    <h3 style="align-content:center;" id="StaffPanel">Staff Section</h3>
+    
+    </a>
+    
+<form>
+    <div id="StudentDiv" class="primary">
+        <div class="row">
+
+            <div class="col-md-12" >
+                <h1 style="text-align:center;">
+                    Student Alert
+
+
+                </h1>
+
+
+            </div>
+
+        </div>
+        <div class="row">
+          
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <input id="ShowStudentsBtn" type="button" class="btn-default btn-info form-control" value="Show Students" style="margin-bottom:5px;display:none;" />
+                    <input id="SendBtn" type="button" class="btn-default btn-primary form-control" value="Send" />
+                    <input id="SendAllBtn" type="button" class="btn-default btn-primary form-control" value="Send To All" style="display:none;" />
+                    <input id="SendSelectiveBtn" type="button" class="btn-default btn-primary form-control" value="Send To Selective" style="display:none;" />
+                </div>
+
+                <div class="col-lg-6">
+
+                    <input id="AllStudentsCheckBox" type="checkbox" /> All Students<br />
+
+                    <input id="SelectiveStudentsCheckBox" type="checkbox" /> Selective Students<br />
+
+                    <div id="Selection" style="display:none;">
+                        <label>Class:</label>
+                        @Html.DropDownList("ClassId", null, "Select Class", new { @class = "form-control" })
+
+                        <label>Section:</label>
+                        @Html.DropDownList("SectionId", null, "Select Class", new { @class = "form-control" })
+
+                        <input id="SelectIndividual" type="checkbox" /> Do you want to select specific students ?<br />
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <input class="form-control" placeholder="Subject" id="Subject" type="text" style="margin-left: 10%; max-width: 400px; text-transform: uppercase; text-decoration: solid;" required />
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+
+                <textarea class="form-control" rows="15" style="margin-bottom:5px; margin-left:10%; max-width: 519px; display: block;" id="Message" placeholder="Type Message Here..." required></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div style="margin-top: 50px;" id="SelectiveStudentDivView">
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</form>
+
+
+    <div id="StaffDiv" class="info">
+        <div class="row">
+
+            <div  class="col-md-12">
+                <h1 style="text-align:center;">
+                    Staff Alert
+
+
+                </h1>
+
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12">
+
+
+                <div class="col-lg-6">
+                    <input id="AllStaffBtn" type="button" class="btn-default btn-primary form-control" value="Send To All" />
+                    <input id="OnlyFacultyBtn" type="button" class="btn-default btn-primary form-control" value="Send To Faculty" style="display:none;" />
+                    <input id="SelectiveStaffBtn" type="button" class="btn-default btn-primary form-control" value="Send To Selective" style="display:none;" />
+
+                </div>
+                <div class="col-lg-6">
+
+                    <input id="AllStaffCheckBox" type="checkbox" /> All Staff<br />
+
+                    <input id="OnlyFacultyCheckBox" type="checkbox" /> Only Faculty<br />
+
+                    <input id="SelectiveStaffCheckBox" type="checkbox" /> Selective Staff<br />
+
+                    <div id="StaffSelectionDiv" style="display:block;">
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <input class="form-control" placeholder="Subject" id="staffsub" type="text" style="margin-left: 10%; max-width: 400px; text-transform: uppercase; text-decoration: solid;" required />
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+
+                <textarea class="form-control" rows="15" style="margin-bottom:50px; margin-left:10%; max-width: 519px; display: block;" id="StaffMessage" placeholder="Type Message Here..." required></textarea>
+            </div>
+        </div>
+      
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div style="margin-top:10px;display:none;" id="SelectiveStaffDivView">
+                    <hr />
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+       
+    </div>
+
+
+
+    </div>
+
+
+
+
+<script>
+
+    $("#StudentDiv").css("display", "none");
+
+    $("#StaffDiv").css("display", "none");
+
+
+    $("#StudentPanel").click(function () {
+
+        $("#StaffDiv").css("display", "none");
+
+        $("#StudentDiv").slideToggle("slow");
+
+
+
+    });
+
+
+    $("#StaffPanel").click(function () {
+
+        $("#StudentDiv").css("display", "none");
+
+        $("#StaffDiv").slideToggle("slow");
+
+
+
+    });
+
+
+    // Student JS
+    $("#ClassId").change(function () {
+
+        var url = "GetSections/?id=" + $("#ClassId").val();
+        $.getJSON(url, sections);
+        function sections(response) {
+            $("#SectionId").empty();
+            $("#SectionId").append("<option value='0'> Select Section </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#SectionId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+    });
+
+
+
+    $("#SendBtn").click(function () {
+        
+        $("#LoadingDiv").css("display", "block");
+                   
+       
+        
+                $.ajax({
+
+            method: "POST",
+            url: "SendMessage",
+            data: { c: $("#ClassId").val(), s: $("#SectionId").val(), m: $("#Message").val(), sub: $("#Subject").val() },
+            success: function (res) {
+                $("#LoadingDiv").css("display", "none");
+                alert(res);
+
+
+                $("#SendBtn").css("display", "none");
+                $("#SendAllBtn").css("display", "none");
+
+
+                $("#ShowStudentsBtn").css("display", "none");
+                $("#Selection").css("display", "none");
+
+        }
+        });
+        
+       
+
+    });
+
+    $("#SendAllBtn").click(function () {
+
+        $("#LoadingDiv").css("display", "block");
+      
+
+            $.ajax({
+
+                method: "POST",
+                url: "SendAllMessage",
+                data: {m: $("#Message").val() },
+                success: function (res) {
+                    $("#LoadingDiv").css("display", "none");
+                    alert(res);
+
+
+                    $("#SendBtn").css("display", "none");
+                    $("#SendAllBtn").css("display", "none");
+
+
+                    $("#ShowStudentsBtn").css("display", "none");
+                    $("#Selection").css("display", "none");
+
+                }
+            });
+
+    });
+
+    $("#ShowStudentsBtn").click(function () {
+        $.ajax({
+
+            method: "GET",
+            url: "ShowSelectiveStudents",
+            data: { c: $("#ClassId").val(), s: $("#SectionId").val() },
+            datatype: "HTML",
+            success: function (Response) {
+
+
+                $("#SelectiveStudentDivView").html(Response);
+                $("#SendSelectiveBtn").css("display", "block");
+                $("#SendBtn").css("display", "none");
+               
+
+            }
+
+        });
+      
+      
+       
+
+      
+    });
+
+
+    $("#ShowStudentsBtn").css("display", "none");
+    $("#Selection").css("display", "none");
+    $("#SendAllBtn").css("display", "none");
+    $("#SendBtn").css("display", "none");
+
+    $("#AllStudentsCheckBox").change(function () {
+      
+
+        if ($("#AllStudentsCheckBox").prop("checked") == true) {
+            $("#ShowStudentsBtn").css("display", "none");
+            $("#Selection").css("display", "none");
+            $("#SendAllBtn").css("display", "block");
+            $("#SendBtn").css("display", "none");
+        }
+        else {
+            $("#ShowStudentsBtn").css("display", "none");
+            $("#Selection").css("display", "none");
+            $("#SendAllBtn").css("display", "none");
+            $("#SendBtn").css("display", "none");
+        }
+    });
+    
+
+    $("#SelectIndividual").change(function () {
+
+        if ($("#SelectIndividual").prop("checked") == true) {
+            $("#ShowStudentsBtn").css("display", "block");
+            $("#SendSelectiveBtn").css("display", "block");
+            $("#SendBtn").css("display", "none");
+            $("#Selection").css("display", "block");
+            $("#SelectiveStudentDivView").css("display", "block");
+           
+
+        }
+        else {
+            $("#ShowStudentsBtn").css("display", "none");
+            $("#Selection").css("display", "block");
+            $("#SendAllBtn").css("display", "none");
+            $("#SendBtn").css("display", "block");
+            $("#SendSelectiveBtn").css("display", "none");
+            
+            $("#SelectiveStudentDivView").css("display", "none");
+
+
+        }
+
+    });
+
+
+    $("#SelectiveStudentsCheckBox").change(function () {
+
+        if ($("#SelectiveStudentsCheckBox").prop("checked") == true) {
+           
+            $("#SendBtn").css("display", "block");
+            $("#Selection").css("display", "block");
+          
+            
+        }
+        else {
+            $("#ShowStudentsBtn").css("display", "none");
+            $("#Selection").css("display", "none");
+            $("#SendAllBtn").css("display", "none");
+            $("#SendBtn").css("display", "none");
+            $("#SendSelectiveBtn").css("display", "none");
+        }
+
+    });
+   
+  
+
+
+
+    // Staff JS
+
+
+    $("#AllStaffCheckBox").change(function () {
+
+
+        if ($("#AllStaffCheckBox").prop("checked") == true) {
+
+
+            $("#AllStaffBtn").css("display", "block");
+          $("#OnlyFacultyBtn").css("display", "none");
+          $("#SelectiveStaffBtn").css("display", "none");
+        }
+        else {
+            $("#AllStaffBtn").css("display", "block");
+            $("#OnlyFacultyBtn").css("display", "none");
+            $("#SelectiveStaffBtn").css("display", "none");
+        }
+    });
+
+           $("#OnlyFacultyCheckBox").change(function () {
+
+
+               if ($("#OnlyFacultyCheckBox").prop("checked") == true) {
+
+
+                   $("#AllStaffBtn").css("display", "none");
+                   $("#OnlyFacultyBtn").css("display", "block");
+                   $("#SelectiveStaffBtn").css("display", "none");
+               }
+               else {
+                   $("#AllStaffBtn").css("display", "block");
+                   $("#OnlyFacultyBtn").css("display", "none");
+                   $("#SelectiveStaffBtn").css("display", "none");
+               }
+           });
+
+
+          
+    
+          
+
+    // staff
+
+
+           $.ajax({
+
+               method: "POST",
+               url: "ShowStaff",
+               success: function (res) {
+                   $("#SelectiveStaffDivView").html(res);
+               }
+           });
+
+           $("#AllStaffBtn").css("display", "none");
+           $("#OnlyFacultyBtn").css("display", "none");
+           $("#SelectiveStaffBtn").css("display", "none");
+           $("#SelectiveStaffDivView").css("display", "none");
+
+
+           $("#SelectiveStaffCheckBox").change(function () {
+
+
+               if ($("#SelectiveStaffCheckBox").prop("checked") == true) {
+
+
+                   $("#AllStaffBtn").css("display", "none");
+                   $("#OnlyFacultyBtn").css("display", "none");
+                   $("#SelectiveStaffDivView").css("display", "block");
+                   $("#SelectiveStaffBtn").css("display", "block");
+                  
+                 
+               }
+               else {
+                   $("#AllStaffBtn").css("display", "none");
+                   $("#OnlyFacultyBtn").css("display", "none");
+                   $("#SelectiveStaffBtn").css("display", "none");
+                   $("#SelectiveStaffDivView").css("display", "none");
+               }
+           });
+
+
+           $("#AllStaffCheckBox").change(function () {
+
+
+               if ($("#AllStaffCheckBox").prop("checked") == true) {
+
+
+                   $("#AllStaffBtn").css("display", "block");
+                   $("#OnlyFacultyBtn").css("display", "none");
+                   $("#SelectiveStaffDivView").css("display", "none");
+                   $("#SelectiveStaffBtn").css("display", "none");
+
+
+               }
+               else {
+                   $("#AllStaffBtn").css("display", "none");
+                   $("#OnlyFacultyBtn").css("display", "none");
+                   $("#SelectiveStaffBtn").css("display", "none");
+                   $("#SelectiveStaffDivView").css("display", "none");
+               }
+           });
+
+
+
+           $("#OnlyFacultyCheckBox").change(function () {
+
+
+               if ($("#OnlyFacultyCheckBox").prop("checked") == true) {
+
+
+                   $("#AllStaffBtn").css("display", "none");
+                   $("#OnlyFacultyBtn").css("display", "block");
+                   $("#SelectiveStaffDivView").css("display", "none");
+                   $("#SelectiveStaffBtn").css("display", "none");
+
+
+               }
+               else {
+                   $("#AllStaffBtn").css("display", "none");
+                   $("#OnlyFacultyBtn").css("display", "none");
+                   $("#SelectiveStaffBtn").css("display", "none");
+                   $("#SelectiveStaffDivView").css("display", "none");
+               }
+           });
+
+          
+       
+           $("#AllStaffBtn").click(function () {
+               $("#LoadingDiv").css("display", "block");
+
+               $.ajax({
+
+
+                   method: "POST",
+                   url: "SendAllStaffMessage",
+                   data: { staffm: $("#StaffMessage").val(), staffsub: $("#staffsub").val() },
+                   success: function (res) {
+                       $("#LoadingDiv").css("display", "none");
+                       alert(res);
+                       $("#AllStaffBtn").css("display", "none");
+                       $("#OnlyFacultyBtn").css("display", "block");
+                       $("#SelectiveStaffDivView").css("display", "none");
+                       $("#SelectiveStaffBtn").css("display", "none");
+
+                   }
+
+               });
+           });
+
+
+           $("#OnlyFacultyBtn").click(function () {
+               $("#LoadingDiv").css("display", "block");
+
+               $.ajax({
+
+
+                   method: "POST",
+                   url: "SendFacultyMessage",
+                   data: { facultym: $("#StaffMessage").val(), staffsub: $("#staffsub").val() },
+                   success: function (res) {
+                       $("#LoadingDiv").css("display", "none");
+                       alert(res);
+                       $("#AllStaffBtn").css("display", "none");
+                       $("#OnlyFacultyBtn").css("display", "block");
+                       $("#SelectiveStaffDivView").css("display", "none");
+                       $("#SelectiveStaffBtn").css("display", "none");
+
+                   },
+                   error: function (res) {
+                       $("#LoadingDiv").css("display", "none");
+                       alert(res + " Please Try Again");
+                      
+
+                   }
+
+               });
+           });
+
+           $("#SendSelectiveBtn").click(function () {
+               $("#LoadingDiv").css("display", "block");
+               var student = $('#SelectiveStudents:checked').map(function () { return this.value; }).get().join(',');
+
+             
+
+               $.ajax({
+
+
+                   method: "POST",
+                   url: "SendSelectiveStudentMsg",
+                   data: { selected:student, m: $("#Message").val(), stdsub:$("#Subject").val() },
+                   success: function (r) {
+                       
+                      
+                       $("#LoadingDiv").css("display", "none");
+                       alert(r);
+
+                       $("#ShowStudentsBtn").css("display", "none");
+                       $("#Selection").css("display", "none");
+                       $("#SendAllBtn").css("display", "none");
+                       $("#SendBtn").css("display", "none");
+
+                   }
+
+               });
+           
+           });
+
+           $("#SelectiveStaffBtn").click(function () {
+               $("#LoadingDiv").css("display", "block");
+               var staf = $('#SelectiveStaff:checked').map(function () { return this.value; }).get().join(',');
+
+              
+
+               $.ajax({
+
+
+                   method: "POST",
+                   url: "SendSelectiveStaffMsg",
+                   data: { selected: staf, m: $("#StaffMessage").val(), staffsub: $("#staffsub").val() },
+                   success: function (r) {
+
+                     
+                       $("#LoadingDiv").css("display", "none");
+                       alert(r);
+
+                       $("#AllStaffBtn").css("display", "none");
+                       $("#OnlyFacultyBtn").css("display", "none");
+                       $("#SelectiveStaffDivView").css("display", "none");
+                       $("#SelectiveStaffBtn").css("display", "none");
+
+                   },
+                   error: function (res) {
+                       $("#LoadingDiv").css("display", "none");
+                       alert(res + " Please Try Again");
+
+
+                   }
+
+               });
+
+           });
+          
+</script>

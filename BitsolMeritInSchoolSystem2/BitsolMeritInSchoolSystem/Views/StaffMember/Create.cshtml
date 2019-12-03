@@ -1,0 +1,184 @@
+﻿@model BitsolMeritInSchoolSystem.Models.StaffMember
+
+@{
+    ViewBag.Title = "Create";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<link href="~/Content/themes/base/all.css" rel="stylesheet" />
+
+@*<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+
+<script src="~/Scripts/jquery-ui-1.12.0.min.js"></script>*@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+<h2>Employee Registration</h2>
+
+
+
+@using (Html.BeginForm()) 
+{
+
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StaffMemberName, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.StaffMemberName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StaffMemberName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StaffMemberFatherName, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.StaffMemberFatherName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StaffMemberFatherName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StaffMemberContactNo, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.StaffMemberContactNo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StaffMemberContactNo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StaffMemberCNIC, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.StaffMemberCNIC, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StaffMemberCNIC)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.HiringDate, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.HiringDate)
+                @Html.ValidationMessageFor(model => model.HiringDate)
+            </div>
+        </div>*@
+        <input name="HiringDate" value="@DateTime.Now" hidden />
+        <div class="form-group">
+            @Html.LabelFor(model => model.StaffMemberEmail, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.StaffMemberEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StaffMemberEmail)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateOfBirth, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @*@Html.TextBoxFor(model => model.DateOfBirth)*@
+                <input type="text" id="DateOfBirth" name="DateOfBirth" class="form-control" />
+                @Html.ValidationMessageFor(model => model.DateOfBirth)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Designation, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.Designation, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Designation)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Qualification, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.Qualification, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Qualification)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Salary, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.Salary,new { @class="form-control"})
+                @Html.ValidationMessageFor(model => model.Salary)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-9">
+                <div class="col-md-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+                <div class="col-md-3">
+                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+                </div>
+
+                <div class="col-md-3">
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+   
+    var availableTags2 = [
+     "Teacher", "Electration", "Gate Keeper", "Supervisor", "Staff Incharge", "Composer"
+    ];
+    $("#Designation").autocomplete({ source: availableTags2 });
+
+
+
+    var availableTags = [
+"simple F.A",
+"FSC",
+"BSc",
+"MSc",
+"ICS",
+"BCS",
+"MIT",
+"BIT",
+"MBA", "BBA", "BSCS","BSIT","BSSE"
+    ];
+    $("#Qualification").autocomplete({
+        source: availableTags
+    });
+
+
+    $("#DateOfBirth").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+
+
+    $("#HiringDate").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+</script>

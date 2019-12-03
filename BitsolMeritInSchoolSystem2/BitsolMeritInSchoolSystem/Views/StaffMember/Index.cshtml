@@ -1,0 +1,98 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.StaffMember>
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+  
+    
+}
+@*<script src="~/Scripts/jquery-3.1.0.min.js"></script>
+    <link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>*@
+<div class="container">
+    <h2>Employees</h2>
+
+    <p>
+        @Html.ActionLink("Add Employee +", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+    <table class="table" id="StaffMembers">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StaffMemberName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.StaffMemberContactNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StaffMemberCNIC)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Designation)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Salary)
+                </th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StaffMemberName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StaffMemberContactNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StaffMemberCNIC)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Designation)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salary)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.StaffMemberId }, new { @class = "btn btn-sm btn-success" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.StaffMemberId }, new { @class = "btn btn-sm btn-info" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.StaffMemberId }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<script>
+    
+
+
+        $("#StaffMembers").DataTable();
+
+
+</script>

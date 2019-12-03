@@ -1,0 +1,158 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<h2>Students</h2>
+
+<p>
+    @Html.ActionLink("Add New", "Create", null, new { @class = "btn btn-sm btn-primary" })  |  @Html.ActionLink("Show Closed X", "ClosedIndex", null, new { @class = "btn btn-sm btn-danger" })  |  @Html.ActionLink("Students Details", "AllStudentsDetails", null, new { @class = "btn btn-sm btn-info" })
+</p>
+
+
+
+
+
+<table class="table hover" id="students">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassSection.Class.ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassSection.Section.SectionName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FatherName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo)
+            </th>
+            @*<th>
+                      @Html.DisplayNameFor(model => model.StudentImage)
+                '</th>*@
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassSection.Class.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassSection.Section.SectionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo)
+                </td>
+
+                @*<td>
+                    @if (item.StudentImage != null)
+                    {
+                         <a href="#@item.StudentId" data-rel="popup" data-position-to="window">
+
+                            <img id="myImg" src='@item.StudentImage' onclick="PopUp(this.src);" style="max-width:100px; max-height:100px;" />
+                        </a>
+                    }
+
+
+                    </td>*@
+
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }, new { @class = "btn btn-sm btn-success" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.StudentId }, new { @class = "btn btn-sm btn-info" }) |
+                    @Html.ActionLink("Close X", "Close", new { id = item.StudentId }, new { @class = "btn btn-sm btn-danger" })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+<div id="myModal" class="" style=" display: none;">
+
+
+
+    <img style="height:600px;width:900px;" class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>
+
+
+
+
+
+
+
+<script>
+    $("#students").DataTable();
+
+
+
+
+    function PopUp(s) {
+        var modal = document.getElementById('myModal');
+        modal.style.display = "block";
+        var modalImg = document.getElementById("img01");
+        modalImg.src = s;
+
+
+
+
+        $("#myModal").dialog("open");
+
+
+    }
+
+    function Close() {
+        var modal = document.getElementById('myModal');
+        modal.style.display = "none";
+    }
+
+
+
+
+
+
+
+    var dialog2 = $("#myModal").dialog({ autoOpen: true, height: 700, width: 700 });
+    function PopUp(s, e) {
+
+        var modal = document.getElementById('myModal');
+        modal.style.display = "block";
+        var modalImg = document.getElementById("img01");
+        modalImg.src = s;
+        dialog2.dialog();
+    }
+
+    $("#myModal").dialog('close');
+
+
+</script>

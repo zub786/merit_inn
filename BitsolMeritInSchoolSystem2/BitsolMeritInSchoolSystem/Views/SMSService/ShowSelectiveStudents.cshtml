@@ -1,0 +1,61 @@
+﻿
+
+
+<hr />
+<table id="AllStudentsTable" class="table table-hover" style="width:100%;background-color:grey;margin-top:10px;">
+
+    <thead>
+        <tr>
+            <th style="text-align: center;">
+                Select
+            </th>
+            <th style="text-align: center;">
+                Name
+            </th>
+            <th style="text-align: center;">
+                Bay-Form #
+            </th>
+            <th style="text-align: center;">
+                Email
+            </th>
+            <th style="text-align: center;">
+                Contact#
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var s in ViewBag.AllStudents)
+        {
+            <tr>
+                <td style="text-align: center;">
+                   <input type="checkbox" class="form-control" value="@s.StudentId" id="SelectiveStudents"/>
+
+                </td>
+                <td style="text-align: center;">
+                    @s.StudentName
+
+                </td>
+                <td style="text-align: center;">
+                    @s.BayFormNo
+
+                </td>
+                <td style="text-align: center;">
+                    @s.Email
+
+                </td>
+                <td style="text-align: center;">
+                    @s.ContactNo
+
+                </td>
+
+
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+

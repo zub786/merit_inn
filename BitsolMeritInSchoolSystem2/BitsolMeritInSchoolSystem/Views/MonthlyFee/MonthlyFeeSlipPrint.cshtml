@@ -1,0 +1,92 @@
+﻿@model BitsolMeritInSchoolSystem.Models.MonthlyFee
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MonthlyFeeSlipPrint</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+
+            <div>
+                <h1 style="text-align:center;">MERIT INN SCHOOL</h1>
+                <img src="~/Images/MeritInnLogo.png" style="height: 150px; width: 150px; margin-bottom: 10px; align-content: center;margin-left:40%;" />
+
+            </div>
+
+        </div>
+        <div class="row">
+            <h3 style="text-align:center;">Monthly Student Fee Slip</h3>
+        </div>
+        <hr />
+        <div class="row">
+
+            <table style="width:100%;">
+
+
+                <tbody>
+                    <tr>
+
+                        <td>         @Html.DisplayNameFor(model => model.ClassSection.Class.ClassName)</td>
+
+                        <td>         @Html.DisplayFor(model => model.ClassSection.Class.ClassName)            </td>
+
+                        <td>         @Html.DisplayNameFor(model => model.ClassSection.Section.SectionName)</td>
+
+                        <td>         @Html.DisplayFor(model => model.ClassSection.Section.SectionName)            </td>
+                    </tr>
+
+
+                    <tr>
+
+                        <td>         @Html.DisplayNameFor(model => model.Student.StudentName)</td>
+
+                        <td>         @Html.DisplayFor(model => model.Student.StudentName)            </td>
+
+                        <td>        @Html.DisplayNameFor(model => model.FeeAmount)</td>
+
+                        <td>         @Html.DisplayFor(model => model.FeeAmount)            </td>
+                    </tr>
+
+
+                    <tr>
+
+
+
+                        <td>      <b>   @Html.DisplayNameFor(model => model.Date) </b></td>
+
+                        <td>   <b>      @Html.DisplayFor(model => model.Date.Date.Date) </b>           </td>
+                    </tr>
+
+
+
+                </tbody>
+
+
+            </table>
+
+
+
+
+
+
+
+        </div>
+         
+
+
+        <div style="margin-top:450px;float:right;">
+
+            <h3><b>Authenticated By</b></h3>
+            <p>_____________________</p>
+
+        </div>
+    </div>
+</body>
+</html>

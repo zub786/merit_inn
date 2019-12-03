@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.ClassSection>
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<h2>Class / Sections</h2>
+
+<p>
+
+    @Html.ActionLink("Add Class/Section +", "Create", null, new { @class = "btn btn-primary" })
+    
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class.ClassName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Section.SectionName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Class.ClassName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Section.SectionName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ClassSectionId }, new { @class = "btn btn-sm btn-success" }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ClassSectionId }, new { @class = "btn btn-sm btn-info" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ClassSectionId }, new { @class = "btn btn-sm btn-danger" })
+
+        </td>
+    </tr>
+}
+
+</table>

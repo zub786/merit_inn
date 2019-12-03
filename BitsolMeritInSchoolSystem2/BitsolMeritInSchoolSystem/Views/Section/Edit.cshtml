@@ -1,0 +1,77 @@
+﻿@model BitsolMeritInSchoolSystem.Models.Section
+
+@{
+    ViewBag.Title = "Edit";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_TeacherLayout2.cshtml";
+    }
+}
+
+<h2>Edit</h2>
+<div class="row">
+
+    <div class="col-md-9">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Section</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.SectionId)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SectionName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                      @Html.TextBoxFor(model => model.SectionName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SectionName)
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-3">
+                        <input type="submit" value="Save" class="btn btn-default btn-success" />
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+        }
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    var availableTags = [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "Rose",
+   "Jasmin",
+   "Sun Flower",
+   "Silver", "Gold", "Metal"
+    ];
+    $("#SectionName").autocomplete({
+        source: availableTags
+    });
+</script>

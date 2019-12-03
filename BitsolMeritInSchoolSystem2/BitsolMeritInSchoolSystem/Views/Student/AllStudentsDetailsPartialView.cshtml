@@ -1,0 +1,52 @@
+﻿
+<table class="table hover" id="students">
+    <thead>
+        <tr>
+            <th>
+               Class
+            </th>
+            <th>
+               Section
+            </th>
+            <th>
+                Student Name
+            </th>
+            <th>
+                Father Name
+            </th>
+
+            <th>
+                Bay-Form No
+            </th>
+
+
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Students)
+        {
+            <tr>
+                <td>
+                    @item.ClassSection.Class.ClassName
+                </td>
+                <td>
+                    @item.ClassSection.Section.SectionName
+                </td>
+                <td>
+                    @item.StudentName
+                </td>
+                <td>
+                    @item.FatherName
+                </td>
+
+                <td>
+                    @item.BayFormNo
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,72 @@
+﻿<div class="container col-md-12">
+
+    <div style="padding:8px;width:100%;padding-top:10px;">
+        <label id="total">Total Students @ViewBag.TotalStudents</label>
+    </div>
+    <hr />
+    <div style="width:100%;">
+
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Class
+                    </th>
+                    <th>
+                        Section
+                    </th>
+                    <th>
+                        CNIC
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var s in ViewBag.SelectedStudents)
+                {
+                    <tr>
+                        <td>
+                            @s.StudentName
+
+                        </td>
+                        <td>
+                            @s.Class.ClassName
+
+                        </td>
+                        <td>
+                            @s.Section.SectionName
+
+                        </td>
+                        <td>
+                            @s.BayFormNo
+
+                        </td>
+
+
+                    </tr>
+                }
+
+            </tbody>
+
+
+        </table>
+
+        <script>
+
+
+            //$(document).ready(function () {
+
+
+            //    var t = $("#tot tbody tr").length();
+            //    $("#total").text("Total Students " + t);
+
+            //});
+
+        </script>
+    </div>
+</div>

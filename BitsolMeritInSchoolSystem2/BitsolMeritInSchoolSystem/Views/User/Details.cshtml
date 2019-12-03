@@ -1,0 +1,76 @@
+﻿@model BitsolMeritInSchoolSystem.Models.User
+
+@{
+    ViewBag.Title = "Details";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_TeacherLayout2.cshtml";
+    }
+}
+
+<h2>User Login Details</h2>
+<div class="row">
+
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Password)
+            </dd>
+        </dl>
+
+    </div>
+
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UserRole)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserRole)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+           
+        </dl>
+
+    </div>
+
+
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

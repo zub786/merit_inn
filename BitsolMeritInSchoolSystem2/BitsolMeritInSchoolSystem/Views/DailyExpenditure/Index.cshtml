@@ -1,0 +1,66 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.DailyExpenditure>
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+
+}
+
+<h2>Daily Expenditutres</h2>
+
+<p>
+    @Html.ActionLink("Add Expense + ", "Create",null, new { @class="btn btn-primary"}) | @Html.ActionLink("Monthly Expense", "MonthlyExpense", null, new { @class = "btn btn-default" }) | @Html.ActionLink("Annual Expense", "AnnualExpense", null, new { @class = "btn btn-default" }) | @Html.ActionLink("Salary Expense", "SalaryExpense", null, new { @class = "btn btn-default" })
+
+</p>
+<table class="table table-hover" id="Expenses" >
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpenditureDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpenditureAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>Action</th>
+        </tr>
+
+    </thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpenditureDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpenditureAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.DailyExpenditureId }, new { @class = "btn btn-sm btn-success" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.DailyExpenditureId }, new { @class = "btn btn-sm btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.DailyExpenditureId }, new { @class = "btn btn-sm btn-danger" })
+            </td>
+        </tr>
+    }
+
+</tbody>
+
+</table>
+<script>
+    $("#Expenses").DataTable();
+</script>

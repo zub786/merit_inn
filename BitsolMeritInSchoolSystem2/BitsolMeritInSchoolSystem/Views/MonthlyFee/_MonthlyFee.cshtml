@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.MonthlyFee>
+
+<table id="fees" class="table m-t-5">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassSection.Class.ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassSection.Section.SectionName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.FeeAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassSection.Class.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassSection.Section.SectionName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FeeAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MonthlyFeeId }, new { @class = "btn btn-sm btn-success" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.MonthlyFeeId }, new { @class = "btn btn-sm btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MonthlyFeeId }, new { @class = "btn btn-sm btn-danger" }) |
+                    @Html.ActionLink("Print", "MonthlyFeeSlipPrint", new { id = item.MonthlyFeeId }, new { @class = "btn btn-sm btn-default" })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+
+<script>
+    $("#fees").DataTable();
+</script>

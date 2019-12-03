@@ -1,0 +1,181 @@
+﻿@model BitsolMeritInSchoolSystem.Models.MonthlyFee
+
+@{
+    ViewBag.Title = "Create";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<h2>Add Monthly Fee</h2>
+<div class="row">
+    <div class="col-md-9">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                <hr />
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 ">Class</label>
+                        <div class="col-md-9">
+                            @Html.DropDownList("ClassId", null, "Select Class", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ClassSection.Class.ClassId)
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="SectionsDiv">
+                        <label class="control-label col-md-3 ">Section</label>
+                        <div class="col-md-9">
+                            @Html.DropDownList("SectionId", null, "Select Section", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ClassSection.Section.SectionId)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StudentId, "StudentId", new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("StudentId", null, "Select Student", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.StudentId)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FeeAmount, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.FeeAmount, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FeeAmount)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Date)
+                        </div>
+                    </div>
+                    <div style="display:none;">
+                        @Html.LabelFor(model => model.ClassSectionId, "ClassSectionId", new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("ClassSectionId", String.Empty)
+                            @Html.ValidationMessageFor(model => model.ClassSectionId)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-9">
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-3">
+                                <input type="submit" value="Save" class="btn btn-default btn-success" />
+                            </div>
+
+                            <div class="col-md-3">
+                                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        }
+
+
+    </div>
+
+</div>
+<script>
+
+   
+
+
+    $("#ClassId").change(function () {
+
+        var url = "GetSections/" + $("#ClassId").val();
+        $.getJSON(url, sections);
+        function sections(response) {
+            $("#SectionId").empty();
+            $("#SectionId").append("<option value='0'> Select Section </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#SectionId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+
+    });
+
+    $("#SectionId").change(function () {
+
+
+        $.ajax({
+
+            mthode: "POST",
+            url: "GetEditCSId/?c=" + $("#ClassId").val() + "&s=" + $("#SectionId").val(),
+            success: function (csid) {
+
+                $("#ClassSectionId").val(csid);
+                p = csid;
+
+            }
+        });
+
+
+
+        var url = "GetStudents/?c=" + $("#ClassId").val() + "&s=" + $("#SectionId").val();
+        $.getJSON(url, Students);
+        function Students(response) {
+            $("#StudentId").empty();
+            $("#StudentId").append("<option value='0'> Select Student </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#StudentId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+
+
+        $.ajax({
+
+            methode: "POST",
+            url: "GetCSId",
+            data: { c: $("#ClassId").val(), s: $("#SectionId").val() },
+            success: function (csid) {
+
+                $("#ClassSectionId").val(csid);
+
+            }
+
+
+        });
+
+    });
+
+
+    $("#Date").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+
+
+
+
+
+
+
+</script>

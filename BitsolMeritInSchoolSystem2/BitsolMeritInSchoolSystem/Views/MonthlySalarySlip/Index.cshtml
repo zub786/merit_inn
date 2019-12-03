@@ -1,0 +1,74 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.MonthlySalarySlip>
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<h2>Monthly Salary Slips</h2>
+
+<p>
+    @Html.ActionLink("Add Salary Slip +", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table id="SalarySlips" class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CNIC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                   @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CNIC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MonthlySalarySlipId }, new { @class = "btn btn-sm btn-success" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.MonthlySalarySlipId }, new { @class = "btn btn-sm btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MonthlySalarySlipId }, new { @class = "btn btn-sm btn-danger" }) |
+@Html.ActionLink("Print", "MonthlySalarySlipPrint", new { id = item.MonthlySalarySlipId }, new { @class = "btn btn-sm btn-default" })
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+<script>
+    $("#SalarySlips").DataTable();
+
+
+</script>

@@ -1,0 +1,68 @@
+﻿@model BitsolMeritInSchoolSystem.Models.Section
+
+@{
+    ViewBag.Title = "Create";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Section</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SectionName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SectionName, new { @class = "form-control" })
+               
+                @Html.ValidationMessageFor(model => model.SectionName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div style="margin-left:32%;" class="col-lg-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+                <div class="col-lg-3">
+                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+}
+
+<script>
+
+    var availableTags = [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "Rose",
+   "Jasmin",
+   "Sun Flower",
+   "Silver", "Gold", "Metal"
+    ];
+    $("#SectionName").autocomplete({
+        source: availableTags
+    });
+</script>

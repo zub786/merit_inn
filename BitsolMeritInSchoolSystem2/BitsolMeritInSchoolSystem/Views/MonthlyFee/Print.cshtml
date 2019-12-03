@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title style="text-align:center;">Paid/Un-Paid Students List</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row" style="margin-top:10%;">
+
+            <div>
+                <h1 style="text-align:center;">THE MERIT SCHOOL</h1>
+                <img src="~/Images/MeritInnLogo222.png" style="height: 150px; width: 150px; margin-bottom: 10px; align-content: center;margin-left:40%;" />
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+
+
+                <p>
+
+
+                    <h3><b>Record of Monthly Fee Paid and UnPaid [Class: @ViewBag.classs  |  Section: @ViewBag.section] Students </b></h3>
+                    
+
+
+                </p>
+
+                <table id="PaidRecord" class="table table-hover" style="width:50%;float:left;" border="1">
+
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">
+                                Paid Students @ViewBag.PaidCount
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var paid in ViewBag.Paids)
+                        {
+                            <tr>
+                                <td style="text-align: center;">
+                                    @paid.Student.StudentName
+
+                                </td>
+
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+
+                </table>
+                <table id="UnPaidRecord" class="table table-hover" style="width:50%;float:right;" border="1">
+
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">
+                                Un-Paid Students @ViewBag.UnPaidCount
+
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var Unpaid in ViewBag.UnPaids)
+                        {
+                            <tr>
+                                <td style="text-align: center;">
+                                    @Unpaid.StudentName
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</body>
+</html>

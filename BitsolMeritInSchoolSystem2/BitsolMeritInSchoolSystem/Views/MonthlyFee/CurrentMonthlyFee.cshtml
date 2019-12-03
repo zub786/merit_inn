@@ -1,0 +1,87 @@
+﻿@model BitsolMeritInSchoolSystem.Models.MonthlyFee
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_TeacherLayout2.cshtml";
+    }
+}
+
+<h2>Monthly Fees</h2>
+
+<p>
+    @Html.ActionLink("Add Monthly Fee +", "Create", null, new { @class = "btn btn-default btn-primary" }) |  @Html.ActionLink("Paid/Un-Paid", "PaidUnPaid", null, new { @class = "btn btn-default btn-info" })
+</p>
+<div class="panel success">
+
+    <h2 style="text-align:center;">
+        @ViewBag.SuccessMessage
+    </h2>
+
+</div>
+<table id="fees" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassSection.Class.ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassSection.Section.SectionName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.FeeAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Student.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ClassSection.Class.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ClassSection.Section.SectionName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.FeeAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Date)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.MonthlyFeeId }, new { @class = "btn btn-sm btn-success" }) |
+                    @Html.ActionLink("Details", "Details", new { id = Model.MonthlyFeeId }, new { @class = "btn btn-sm btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.MonthlyFeeId }, new { @class = "btn btn-sm btn-danger" }) |
+                    @Html.ActionLink("Print", "MonthlyFeeSlipPrint", new { id = Model.MonthlyFeeId }, new { @class = "btn btn-sm btn-default" })
+
+                </td>
+            </tr>
+      
+    </tbody>
+
+</table>
+
+
+
+<script>
+    $("#fees").DataTable();
+</script>

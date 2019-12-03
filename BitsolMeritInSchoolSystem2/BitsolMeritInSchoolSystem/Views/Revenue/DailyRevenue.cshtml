@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "MonthlyExpense";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<div class="container">
+
+    <h2>Daily Revenue Record</h2>
+    <p>@Html.ActionLink(" Back", "Index", null, new { @class = "btn btn-default glyphicon glyphicon-arrow-left " })   </p>
+
+    <div style="display:inline-block;">
+        <label>Date</label>
+        <input style="margin-left:25px;" class="form-control" type="text" name="Year" id="Date" required />
+
+        <br />
+        <input type="button" class="btn btn-info" value="Show Revenue" id="ShowDailyRevenue" />
+    </div>
+
+
+
+
+
+
+    <hr />
+
+    <div id="DailyRecord">
+       
+    </div>
+
+</div>
+
+
+<script>
+
+    $("#Date").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+
+    $("#ShowDailyRevenue").click(function () {
+
+
+
+        var yy = $("#Date").val();
+
+        $.ajax({
+
+            method: "GET",
+            url: "ShowDailyRevenue",
+            data: { Date: yy },
+            success: function (Response) {
+
+                $("#DailyRecord").html(Response);
+
+            }
+
+        });
+
+
+    });
+
+    //$("#ShowDailyRevenue").click(function () {
+
+
+
+    //    var yy = $("#Date").val();
+
+    //    $.ajax({
+
+    //        method: "GET",
+    //        url: "ShowAnnualRevenue",
+    //        data: { Date: yy },
+    //        success: function (Response) {
+
+    //            $("#AnnualRecord").html(Response);
+
+    //        }
+
+    //    });
+
+
+    //});
+
+
+</script>

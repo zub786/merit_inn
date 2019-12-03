@@ -1,0 +1,117 @@
+﻿@model BitsolMeritInSchoolSystem.Models.MonthlyFee
+
+@{
+    ViewBag.Title = "Details";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_TeacherLayout2.cshtml";
+    }
+}
+
+<h2>Monthly Fee Details</h2>
+
+<div class="row">
+
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ClassSection.Class.ClassName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClassSection.Class.ClassName)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ClassSection.Section.SectionName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClassSection.Section.SectionName)
+            </dd>
+
+        </dl>
+
+    </div>
+
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Student.StudentName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Student.StudentName)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FeeAmount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FeeAmount)
+            </dd>
+
+        </dl>
+
+    </div>
+
+
+</div>
+
+
+
+<div class="row">
+
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+
+           
+
+        </dl>
+
+    </div>
+
+
+</div>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MonthlyFeeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

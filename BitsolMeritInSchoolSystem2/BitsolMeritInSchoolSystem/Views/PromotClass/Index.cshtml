@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+
+<script src="~/Scripts/jquery-ui-1.12.0.min.js"></script>
+
+
+<div class="container">
+    <h2>Class Promotion</h2>
+    <hr />
+
+    <div style="width:100%;">
+        <input id="PromotionDoneBtn" type="button" class="btn btn-success btn-default form-control PromotionDoneBtn" style="width:100%;display:block;" value="Done Promotions" />
+    </div>
+
+   <div class="col-md-12" style="width:100%;">
+       <div style="float:left;width:48%;">
+           <label>Class:</label>
+           @Html.DropDownList("ClassId", null, "Select Class", new { @class = "form-control" })
+           <label>Section:</label>
+           @Html.DropDownList("SectionId", null, "Select Section", new { @class = "form-control" })
+           <br />
+
+           <input id="ShowStudents" style="width:100%;" type="button" class="btn btn-info" value="Show Students" />
+
+       </div>
+
+       <div style="float:right;width:48%;">
+
+           <label>Promot To Class:</label>
+           @Html.DropDownList("PromotToClassId", null, "Select Class", new { @class = "form-control" })
+
+           <label>Promot To Section:</label>
+           @Html.DropDownList("PromotToSectionId", null, "Select Section", new { @class = "form-control" })
+           <br>
+
+           <input style="width:100%;" id="PromotStudents" type="button" class="btn btn-default" value="Promot Students" />
+       </div>
+   </div>
+
+    <div id="StudentsBody" style="width:100%;">
+       
+       
+
+
+       
+    </div>
+   
+
+</div>
+
+<div id="Confrmdiv" title="Confrim Promotions" style="display:none;">
+    <p>Have you done classes promotions ?</p>
+
+    <input id="YesBtn" class="form-control" type="button" value="Yes" />
+    <br />
+    <input id="NoBtn" class="form-control btn-danger" type="button" value="No" />
+</div>
+
+
+
+
+
+
+<script>
+  
+       
+
+
+
+    $("#ClassId").change(function () {
+
+        var url = "GetSections/" + $("#ClassId").val();
+        $.getJSON(url, sections);
+        function sections(response) {
+            $("#SectionId").empty();
+            $("#SectionId").append("<option value='0'> Select Section </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#SectionId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+
+    });
+
+    $("#PromotToClassId").change(function () {
+
+        var url = "PromotToGetSections/" + $("#PromotToClassId").val();
+        $.getJSON(url, sections);
+        function sections(response) {
+            $("#PromotToSectionId").empty();
+            $("#PromotToSectionId").append("<option value='0'> Select Section </option>");
+            for (var i = 0; i < response.length; i++) {
+                $("#PromotToSectionId").append("<option value='" + response[i].value + "'>" + response[i].display + "</option>");
+            }
+
+        }
+
+    });
+
+    $("#ShowStudents").click(function () {
+
+
+        $.ajax({
+
+            method: "POST",
+            url: "ShowStudents",
+            data: { c: $("#ClassId").val(), s: $("#SectionId").val() },
+            success: function (data) {
+
+                $("#StudentsBody").html(data);
+
+            }
+        });
+    });
+
+
+    $("#PromotionDoneBtn").click(function () {
+
+        $("#Confrmdiv").dialog("open");
+      
+    });
+
+    $("#YesBtn").click(function () {
+
+        $.ajax({
+
+            method: "POST",
+            url: "Promoted",
+            success: function (data) {
+
+                alert(data);
+                $("#Confrmdiv").dialog("close");
+            }
+        });
+
+    });
+
+
+    $("#NoBtn").click(function () {
+
+        $("#Confrmdiv").dialog("close");
+
+    });
+
+    $("#PromotStudents").click(function () {
+
+        if ($('input:checkbox:checked').length == 0) {
+
+
+            alert("Sorry! Please select students");
+            return;
+
+        }
+
+
+        $.ajax({
+
+
+            method: "POST",
+            url: "Promot",
+            data: { PromotList: $('#PromotedStudents:checked').map(function () { return this.value; }).get().join(','), PromotTo: $("#PromotToClassId").val(), PromotToSec: $("#PromotToSectionId").val() },
+            success: function (r) {
+
+                alert(r);
+
+                @*@Html.Action("Index")*@
+                }
+
+        });
+
+    });
+   
+    $("#Confrmdiv").dialog({
+        autoOpen: false,
+        show: {
+            effect: "blind",
+            duration: 1000
+        },
+        hide: {
+            effect: "explode",
+            duration: 1000
+        }
+    });
+
+
+    
+ 
+       
+
+   
+
+</script>

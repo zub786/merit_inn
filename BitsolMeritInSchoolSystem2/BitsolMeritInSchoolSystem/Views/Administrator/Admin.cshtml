@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+  
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    
+    <link href="~/Content/simple-sidebar.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div class="container">
+
+
+
+        @*<div id="wrapper">
+
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <h3>
+                            <a href="#">
+                                Administrator
+                            </a>
+                        </h3>
+                    </li>
+                   
+                    <li>@Html.ActionLink("Student", "Index", "Student")</li>
+                    <li>@Html.ActionLink("Classes", "Index", "Class")</li>
+                    <li>@Html.ActionLink("Sections", "Index", "Section")</li>
+                    <li>@Html.ActionLink("Class Sections", "Index", "ClassSection")</li>
+                    <li>@Html.ActionLink("Staff Members", "Index", "StaffMember")</li>
+                    <li>@Html.ActionLink("Daily Expenses", "Index", "DailyExpenditure")</li>
+                    <li>@Html.ActionLink("Monthly Fee", "Index", "MonthlyFee")</li>
+                    <li>@Html.ActionLink("Monthly Salary Slip", "Index", "MonthlySalarySlip")</li>
+                    <li>@Html.ActionLink("SMS Service", "EmailPassword", "SMSService")</li>
+                    <li>@Html.ActionLink("Users", "Index", "User")</li>
+                    <li>@Html.ActionLink("Promot Classes", "Index", "PromotClass")</li>
+
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <a href="#menu-toggle" class=" glyphicon glyphicon-list btn btn-primary btn-lg" id="menu-toggle"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+
+            <div id="CreateUserDiv" title="Create New User" style="display:none;">
+
+                <label>User Name</label>
+                <input type="text" id="UserName" class="form-control" required />
+                <label>Password</label>
+                <input type="password" id="Password" class="form-control" required />
+                <label>Select User Role</label>
+                <select class="form-control" id="UserRole" required>
+                    <option>User Role</option>
+                    <option value="1">Administrator</option>
+                    <option value="2">Teacher</option>
+                </select>
+                <hr />
+                <input type="button" value="Add" id="CreateNew" class="btn btn-primary" />
+
+
+            </div>
+
+        </div>*@
+    </div>
+    @*<!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>*@
+
+    <!-- Menu Toggle Script -->
+    <script>
+        //$("#CreateLog").click(function () {
+        //    alert("mian");
+        //    $("#CreateUserDiv").dialog();
+            
+
+        //});
+
+        //$("#CreateUserDiv").dialog({
+        //    autoOpen: false
+        //});
+
+        //$("#CreateLog").click(function (e) {
+        //    e.preventDefault();
+        //    $("#CreateUserDiv").dialog("open");
+        //});
+          
+
+
+
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+       
+        $("#CreateNew").click(function () {
+            alert();
+
+            $.ajax({
+                method: "POST",
+                url: "../Administrator/Create",
+                data: { UserName: $("#UserName").val(), Password: $("#Password").val(), UserRole: $("#UserRole").val() },
+                success: function (response) {
+
+                    alert(response);
+                    $('#CreateUserDiv').dialog('close');
+                    
+
+                }
+            });
+
+        });
+       
+      
+     
+
+            $("#CreateUserDiv").dialog({
+                modal: true,
+                autoOpen: false,
+                resizable: false,
+                closeText: "X",
+                title: "Create User Login",
+                width: 350,
+                height: 340
+            });
+            
+     
+
+                $("#CreateLog").click(function () {
+                    $('#CreateUserDiv').dialog('open');
+                });
+
+ 
+      
+
+
+       
+
+        //$("#CreateLog").click(function () {
+        //    alert("mian");
+        //    $("#CreateUserDiv").dialog();
+
+
+        //});
+
+    </script>
+
+</body>
+
+</html>

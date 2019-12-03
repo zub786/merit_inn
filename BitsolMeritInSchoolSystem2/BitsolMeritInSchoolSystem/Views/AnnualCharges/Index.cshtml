@@ -1,0 +1,109 @@
+﻿@model IEnumerable<BitsolMeritInSchoolSystem.Models.AnnualCharges>
+
+@{
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Students Annual Charges</title>
+</head>
+<body>
+ 
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <p>
+                @Html.ActionLink("Add Annual charges + ", "Create", null, new { @class = "btn btn-default btn-primary" }) |  @Html.ActionLink("Paid/Un-Paid", "PaidUnPaid", null, new { @class = "btn btn-default btn-info" })
+            </p>
+            <table class="table" id="annualfees">
+
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Student.StudentName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AnnualChargesDescription)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PaidAmount)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.RemainingChargesAmount)
+                        </th>
+
+                        
+
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Date)
+                        </th>
+                        <th></th>
+                    </tr>
+
+
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Student.StudentName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AnnualChargesDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaidAmount)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RemainingChargesAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.AnnualChargesId }, new { @class = "btn btn-sm btn-success" }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.AnnualChargesId }, new { @class = "btn btn-sm btn-info" }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.AnnualChargesId }, new { @class = "btn btn-sm btn-danger" })
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+<script>
+
+    $("#annualfees").DataTable();
+
+
+</script>

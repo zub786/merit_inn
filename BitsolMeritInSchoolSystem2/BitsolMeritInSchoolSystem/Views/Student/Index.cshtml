@@ -1,0 +1,23 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    if (Session["Email"] == null)
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+        Layout = "~/Views/Shared/_Layout2.cshtml";
+    }
+}
+
+<h2>Students</h2>
+
+<p>
+    @Html.ActionLink("Add New", "Create",null,new { @class = "btn btn-sm btn-primary" })  |  @Html.ActionLink("Show Closed X", "ClosedIndex", null, new { @class = "btn btn-sm btn-danger" })  |  @Html.ActionLink("Students Details", "AllStudentsDetails", null, new { @class = "btn btn-sm btn-info" }) |  @Html.ActionLink("All Students", "AllStudentIndex", null, new { @class = "btn btn-sm btn-info" })
+</p>
+
+
